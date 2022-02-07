@@ -66,6 +66,7 @@ class Shot(
       projectName: String,
       shouldPrintBase64Error: Boolean,
       tolerance: Double,
+      colorTolerance: Int,
       showOnlyFailingTestsInReports: Boolean,
       orchestrated: Boolean
   ): ScreenshotsComparisionResult = {
@@ -87,7 +88,7 @@ class Shot(
         newScreenshotsVerificationReportFolder,
         shotFolder
       )
-      val comparison = screenshotsComparator.compare(screenshots, tolerance)
+      val comparison = screenshotsComparator.compare(screenshots, tolerance, colorTolerance)
       val updatedComparison = screenshotsDiffGenerator.generateDiffs(
         comparison,
         newScreenshotsVerificationReportFolder,
