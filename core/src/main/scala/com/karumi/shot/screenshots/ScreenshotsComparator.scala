@@ -1,16 +1,27 @@
 package com.karumi.shot.screenshots
 
 import java.io.File
-
 import com.karumi.shot.domain._
 import com.karumi.shot.domain.model.ScreenshotsSuite
 import com.sksamuel.scrimage.Image
 
+import java.util.concurrent.ForkJoinPool
+import scala.collection.parallel.ForkJoinTaskSupport
+
 class ScreenshotsComparator {
+  //limit the number of threads
+  val numberOfThreads = Math.min(2, Runtime.getRuntime.availableProcessors())
+  private val taskSupport = new ForkJoinTaskSupport(new ForkJoinPool(numberOfThreads))
 
   def compare(screenshots: ScreenshotsSuite, tolerance: Double): ScreenshotsComparisionResult = {
+    println(
+      Console.GREEN + s"Comparing screenshots using $numberOfThreads max threads" + Console.RESET
+    )
+    val screenshotsParallel = screenshots.par
+    screenshotsParallel.tasksupport = taskSupport
+
     val errors =
-      screenshots.par.flatMap(compareScreenshot(_, tolerance)).toList
+      screenshotsParallel.flatMap(compareScreenshot(_, tolerance)).toList
     ScreenshotsComparisionResult(errors, screenshots)
   }
 
