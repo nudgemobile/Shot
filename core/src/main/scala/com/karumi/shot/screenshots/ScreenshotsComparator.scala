@@ -79,8 +79,15 @@ class ScreenshotsComparator {
       val percentageOutOf100        = percentageOfDifferentPixels * 100.0
       val imagesAreDifferent        = percentageOutOf100 > tolerance
       val imagesAreConsideredEquals = !imagesAreDifferent
+      val screenshotName = screenshot.name
+
+      if(imagesAreDifferent) {
+        println(
+          Console.RED + s"We detected a failure in the screenshot named $screenshotName and the percentage of different pixels is $percentageOutOf100 %" + Console.RESET
+        )
+      }
+
       if (imagesAreConsideredEquals && tolerance != Config.defaultTolerance) {
-        val screenshotName = screenshot.name
         println(
           Console.YELLOW + s"⚠️   Shot warning: There are some pixels changed in the screenshot named $screenshotName, but we consider the comparison correct because tolerance is configured to $tolerance % and the percentage of different pixels is $percentageOutOf100 %" + Console.RESET
         )
