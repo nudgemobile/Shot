@@ -1,7 +1,7 @@
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "org.jlleitschuh.gradle.ktlint"
-apply plugin: "com.vanniktech.maven.publish"
+apply plugin: "maven-publish"
 
 android {
     compileSdkVersion libs.versions.targetsdk.get().toInteger()
@@ -69,4 +69,20 @@ dependencies {
     androidTestImplementation libs.mockito.android
     androidTestImplementation libs.mockito.kotlin
     androidTestImplementation libs.bundles.androidx.test
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // You can then customize attributes of the publication as shown below.
+                groupId = "$library_group"
+                artifactId = "shot-android"
+                version = "$version_name"
+
+                from components.release
+            }
+        }
+    }
 }

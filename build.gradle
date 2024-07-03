@@ -5,12 +5,15 @@ buildscript {
         google()
     }
 
+    ext.kotlin_version = "1.4.32"
+    ext.library_group = "com.github.mhiew"
+    ext.version_name = "5.14.2"
+
     dependencies {
         classpath(libs.scalatest.gradle.plugin)
         classpath(libs.scalafmt.gradle.plugin)
         classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
         classpath(libs.ktlint.gradle.plugin)
-        classpath(libs.vanniktech.publish.gradle.plugin)
     }
 }
