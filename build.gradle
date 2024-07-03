@@ -7,7 +7,7 @@ buildscript {
 
     ext.kotlin_version = "1.4.32"
     ext.library_group = "com.github.nudgemobile"
-    ext.version_name = "6.1.1"
+    ext.version_name = "6.1.2"
 
     dependencies {
         classpath(libs.scalatest.gradle.plugin)
